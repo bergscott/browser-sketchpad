@@ -1,0 +1,26 @@
+#sketchpad {
+    overflow: hidden;
+    margin: 0 auto;
+    width: 800px;
+}
+
+#sketchpad .row {
+    clear: left;
+    overflow: hidden;
+}
+
+#sketchpad .row .tile {
+    width: 50px;
+    height: 50px;
+    margin: 0;
+    display: block;
+    float: left;
+}
+.tile {
+    background-color: red;
+}
+
+.tile.active {
+    background-color: blue;
+}
+
