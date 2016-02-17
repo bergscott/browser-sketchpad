@@ -1,13 +1,12 @@
 $(document).ready(function() {
     var divrow = makeRow(16);
     buildSketchpad(divrow, 16);
-    $('#sketchpad .tile').hover(
-	function() {
-	    $(this).addClass('active');
-	},
-	function() {
-	    //$(this).removeClass('active');
-	});
+    $('#sketchpad .tile').mouseenter(function() {
+	$(this).addClass('active');
+    });
+    $('#reset').click(function() {
+	$('#sketchpad .active').removeClass('active');
+    });
 });
 
 var makeRow = function(colCount) {
@@ -19,8 +18,9 @@ var makeRow = function(colCount) {
 };
 
 var buildSketchpad = function(row, rowCount) {
-    var $target = $('#sketchpad');
+    var $fragment = $(document.createDocumentFragment());
     for (var i = 0; i < rowCount; i++) {
-	$target.append(row);
+	$fragment.append(row);
     }
+    $('#sketchpad').append($fragment);
 };
