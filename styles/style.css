@@ -23,11 +23,11 @@ body {
     float: left;
 }
 .tile {
-    background-color: #ffffe6;
+    background-color: rgb(255,255,230);
 }
 
 .tile.active {
-    background-color: #000080;
+    background-color: rgb(0,0,128);
 }
 
 #reset {
@@ -42,6 +42,7 @@ body {
 
 #radio-wrapper {
     text-align: center;
-    margin-top: 20px;
+    margin-top: 10px;
+    margin-bottom: 10px;
 }
 
