@@ -1,7 +1,13 @@
+body {
+    background-color: #f3f3fc;
+}
+
 #sketchpad {
     overflow: hidden;
     margin: 0 auto;
-    width: 800px;
+    width: 801px;
+    box-shadow: -5px 5px 5px #808080;
+    padding-right: -1px;
 }
 
 #sketchpad .row {
@@ -17,15 +23,25 @@
     float: left;
 }
 .tile {
-    background-color: red;
+    background-color: #ffffe6;
 }
 
 .tile.active {
-    background-color: blue;
+    background-color: #000080;
 }
 
 #reset {
-    padding: 5px 20px;
+    padding: 5px 15px;
     margin: 8px auto;
     display: block;
+    border-radius: 20px;
+    box-shadow: -2px 2px 2px #808080;
+    border: 1px solid #666666;
+    background-color: white;
 }
+
+#radio-wrapper {
+    text-align: center;
+    margin-top: 20px;
+}
+

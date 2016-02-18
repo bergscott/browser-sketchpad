@@ -1,12 +1,14 @@
 $(document).ready(function() {
-    buildSketchpad_v2(16);
+    buildSketchpad(16);
     mouseListen();
     $('#reset').click(function() {
-        $('#sketchpad').empty();
         var user = +prompt('Generating new sketchpad.\nHow many boxes per side?');
-        setSize(user);
-        buildSketchpad_v2(user);
-        mouseListen();
+	if (user > 0) {
+	    $('#sketchpad').empty();
+	    setSize(user);
+	    buildSketchpad(user);
+	    mouseListen();
+	}
     });
 });
 
@@ -24,14 +26,6 @@ var makeRow = function(colCount) {
     return "<div class='row'>"+result+"</div>";
 };
 
-var buildSketchpad = function(row, rowCount) {
-    var $fragment = $(document.createDocumentFragment());
-    for (var i = 0; i < rowCount; i++) {
-	$fragment.append(row);
-    }
-    $('#sketchpad').append($fragment);
-};
-
 var addRows = function(row, rowCount) {
     var $fragment = $(document.createDocumentFragment());
     for (var i = 0; i < rowCount; i++) {
@@ -39,7 +33,7 @@ var addRows = function(row, rowCount) {
     }
     $('#sketchpad').append($fragment);
 };
-var buildSketchpad_v2 = function(size) {
+var buildSketchpad = function(size) {
     var divrow = makeRow(size);
     addRows(divrow, size);
 };
@@ -47,6 +41,9 @@ var buildSketchpad_v2 = function(size) {
 var setSize = function(size) {
     var $style = $('style');
     var dimension = 800 / size;
+    if (dimension * size > 800) {
+	dimension -= (dimension * size - 800) / size;
+    }
     dimension += 'px';
     var selector = '#sketchpad .row .tile';
     var attributes = '{width: '+dimension+'; height: '+dimension+';}';
