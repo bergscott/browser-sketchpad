@@ -2,7 +2,9 @@ $(document).ready(function() {
     buildSketchpad(16);
     mouseListen_v2();
     $('#reset').click(function() {
-        var user = +prompt('Generating new sketchpad.\nHow many boxes per side?');
+        var user = +prompt(
+	    'Generating new sketchpad.\nHow many boxes per side?',
+	    '16');
 	if (user > 0) {
 	    $('#sketchpad').empty();
 	    setSize(user);
