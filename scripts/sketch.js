@@ -55,14 +55,15 @@ var setSize = function(size) {
 
 var mouseListen = function() {
     $('#sketchpad .tile').mouseenter(function() {
+	var $this = $(this);
 	if (document.getElementById('crazy').checked) {
-	    $(this).css({'background-color': getRandomColor()});
-	    $(this).addClass('active');
-	} else if ($(this).hasClass('active')) {
+	    $this.css({'background-color': getRandomColor()});
+	    $this.addClass('active');
+	} else if ($this.hasClass('active')) {
 	    var newColor = getDarkerColor($(this).css('background-color'));
-	    $(this).css({'background-color': newColor});
+	    $this.css({'background-color': newColor});
 	} else {
-	    $(this).addClass('active');
+	    $this.addClass('active');
 	}
     });
 };
