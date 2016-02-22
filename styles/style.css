@@ -1,5 +1,6 @@
 body {
-    background-color: #f3f3fc;
+    background-color: #f3f3f3;
+    font-family: Arial, sans-serif;
 }
 
 #sketchpad {
@@ -38,11 +39,33 @@ body {
     box-shadow: -2px 2px 2px #808080;
     border: 1px solid #666666;
     background-color: white;
+    font-size: .9em;
+    letter-spacing: 1px;
 }
 
-#radio-wrapper {
+#controls-wrapper {
     text-align: center;
-    margin-top: 10px;
-    margin-bottom: 10px;
+    width: 800px;
+    margin: 10px auto;
 }
 
+#footer-wrapper {
+    width: 800px;
+    margin: 10px auto;
+}
+
+#footer {
+    display: block;
+    text-align: right;
+    font-size: 0.75em;
+    color: #888;
+}
+
+#footer a {
+    text-decoration: none;
+    color: #404040;
+}
+
+#footer a:hover {
+    text-decoration: underline;
+}

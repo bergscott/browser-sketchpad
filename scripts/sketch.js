@@ -1,19 +1,32 @@
+// Script for Browser Sketchpad by Scott Berg
+
+// --------------------------CONSTANT DEFINITIONS------------------------------
 var MAXBLUE = 128;
 var TOBLACK = 10;
 var DEFAULT_DECREMENT = [0,0,Math.ceil(MAXBLUE / TOBLACK)];
 var INITSIZE = 16;
 var PADPIXELS = 800;
 var STANDARD_COLOR = "rgb(0,0,"+MAXBLUE+")";
+var MAXSIZE = 200;
 
+//------------------------------MAIN FUNCTION----------------------------------
+
+// Builds the initial sketchpad and sets up event listeners for mousing over
+// tiles and clicking the reset button.
 $(document).ready(function() {
     var padSize = INITSIZE;
     buildSketchpad(padSize);
     mouseListen();
+    // clicking reset prompts for new sketchpad size and generates new sketchpad
     $('#reset').click(function() {
         var user = +prompt(
-	    'Generating new sketchpad.\nHow many boxes per side?',
+	    '\tGenerating new sketchpad.\n' +
+	    'How many boxes per side (1-'+MAXSIZE+')?',
 	    padSize);
-	if (user > 0) {
+	// ignore non-positive-integer inputs
+	if (user > MAXSIZE) {
+	    alert("Maximum boxes per side is "+MAXSIZE);
+	} else if (user > 0) {
 	    $('#sketchpad').empty();
 	    padSize = user;
 	    setSize(padSize);
@@ -23,11 +36,17 @@ $(document).ready(function() {
     });
 });
 
+//---------------------------FUNCTION DEFINITIONS------------------------------
+
+// buildSketchpad creates a 800x800px sketchpad with a resolution of interger
+// SIZE x SIZE tiles
 var buildSketchpad = function(size) {
     var divrow = makeRow(size);
     addRows(divrow, size);
 };
 
+// makeRow returns a html string of a .row div containing int COLCOUNT 
+// .tile divs
 var makeRow = function(colCount) {
     var result = '';
     for (var i = 0; i < colCount; i++) {
@@ -36,6 +55,8 @@ var makeRow = function(colCount) {
     return "<div class='row'>"+result+"</div>";
 };
 
+// addRows takes html string ROW and appends it to the sketchpad int ROWCOUNT 
+// times
 var addRows = function(row, rowCount) {
     var $fragment = $(document.createDocumentFragment());
     for (var i = 0; i < rowCount; i++) {
@@ -44,6 +65,8 @@ var addRows = function(row, rowCount) {
     $('#sketchpad').append($fragment);
 };
 
+// setSize sets the pixel width and height of sketchpad tiles based on the 
+// number of tiles per side requested, SIZE
 var setSize = function(size) {
     var $style = $('style');
     var dimension = PADPIXELS / size;
@@ -54,9 +77,13 @@ var setSize = function(size) {
     $style.append(selector + ' ' + attributes);
 };
 
+// mouseListen is an event listener that listens for when the mouse enters a 
+// tile of the sketchpad and triggers a color change based on the tile's state 
+// and mode of sketchpad (crazy/standard) 
 var mouseListen = function() {
     $('#sketchpad .tile').mouseenter(function() {
 	var $this = $(this);
+	// crazy colors mode
 	if (document.getElementById('crazy').checked) {
 	    if ($this.hasClass('crazy')) {
 		darkenColor($this);
@@ -64,6 +91,7 @@ var mouseListen = function() {
 		initializeColor($this, getRandomColor());
 		$this.addClass('crazy');
 	    }
+	// standard mode
 	} else if ($this.hasClass('active') && !$this.hasClass('crazy')) {
 	    darkenColor($this);
 	} else {
@@ -96,18 +124,30 @@ var getDecrementVals = function(color) {
     return decrementVals;
 };
 
+// darkenColor changes the CSS background-color of jQuery object $TILE to a
+// color 10% (relative to $TILE's original color) closer to black
 var darkenColor = function($tile) {
     var newColor = getDarkerColor($tile);
     $tile.css({'background-color': newColor});
 };
 
+// getRandomColor returns a string representation of a random RGB color
+// example: "rgb(33,255,0)"
 var getRandomColor = function() {
-    var randRGBVal = function() {
-	return Math.floor(Math.random()*256);
-    };
     return 'rgb('+randRGBVal()+','+randRGBVal()+','+randRGBVal()+')';
 };
 
+// randRGBVal returns a random integer between 0 and 255, inclusive
+var randRGBVal = function() {
+    return Math.floor(Math.random()*256);
+};
+
+// getDarkerColor returns a string representation of the RGB color that is
+// 10% closer to back than jQuery object $TILE's current color. Percentage 
+// black is based off of $TILE's initial color. Amount to subtract from
+// current RGB values to calculate darker color is stored as data attribute
+// 'blackDecrement' for crazy colors mode or defined constant DEFAULT_DECREMENT
+// for standard mode.
 var getDarkerColor = function($tile) {
     currentColor = parseRGB($tile.css('background-color'));
     var decrement = DEFAULT_DECREMENT;
@@ -140,4 +180,3 @@ var parseRGB = function(color) {
     }
     return result;
 };
-
